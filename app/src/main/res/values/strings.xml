@@ -74,4 +74,9 @@
     <string name="title_activity_album">AlbumActivity</string>
     <string name="album">Album</string>
     <string name="quem_somos">Quem somos?</string>
+    <string name="loading">Carregando...</string>
+
+    <!-- Configurações do Facebook -->
+    <string name="facebook_app_id">1679151418780691</string>
+
 </resources>

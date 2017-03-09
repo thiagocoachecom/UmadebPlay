@@ -17,6 +17,16 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    packagingOptions {
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE-FIREBASE.txt'
+        exclude 'META-INF/NOTICE'
+    }
+}
+
+repositories {
+    mavenCentral()
 }
 
 dependencies {
@@ -28,6 +38,9 @@ dependencies {
     compile 'com.android.support:support-v4:25.2.0'
     testCompile 'junit:junit:4.12'
 
+    //Google Play Service
+    compile 'com.google.android.gms:play-services-auth:9.2.0'
+
 
     // Firebase Auth
     compile 'com.google.firebase:firebase-auth:10.2.0'
@@ -37,6 +50,13 @@ dependencies {
 
     //Firebase Database
     compile 'com.google.firebase:firebase-database:10.2.0'
+
+    //Firebase Client
+    compile 'com.firebase:firebase-client-android:2.5.2+'
+
+    //Facebook SDK
+    compile 'com.facebook.android:facebook-android-sdk:4.9.0'
+    compile 'com.facebook.android:facebook-android-sdk:[4,5)'
 
     //Picasso
     compile 'com.squareup.picasso:picasso:2.5.0'
@@ -68,10 +88,5 @@ dependencies {
     compile 'de.hdodenhof:circleimageview:2.1.0'
 
 }
-
-
-
-
-
 
 apply plugin: 'com.google.gms.google-services'
