@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:title="Sair"
+        android:id="@+id/btn_sair" />
+    <item
+        android:id="@+id/btn_quem_somos"
+        android:orderInCategory="100"
+        android:title="@string/quem_somos"
+        app:showAsAction="never"
+        android:icon="@mipmap/ic_umadeb_app_brasilia"/>
+</menu>

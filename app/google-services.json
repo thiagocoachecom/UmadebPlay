@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "986617926090",
+    "firebase_url": "https://aplicativoumadeb.firebaseio.com",
+    "project_id": "aplicativoumadeb",
+    "storage_bucket": "aplicativoumadeb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:986617926090:android:dbb0a2d6167d621e",
+        "android_client_info": {
+          "package_name": "br.com.netcriativa.umadeb"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "986617926090-bo0l1jnofe14g209237v1c743s0ijdqc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "br.com.netcriativa.umadeb",
+            "certificate_hash": "cc1b272fa167651bfa852e993d3cb5576064356c"
+          }
+        },
+        {
+          "client_id": "986617926090-4fbq0oshmlq7cdh3kfh3stc2ak47ndvc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD8D7u7a6mB26nIt1PIjxWIAn6ht_tr9xM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "986617926090-4fbq0oshmlq7cdh3kfh3stc2ak47ndvc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

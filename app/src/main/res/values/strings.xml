@@ -1,0 +1,77 @@
+<resources>
+    <string name="app_name">Umadeb Play</string>
+    <string name="action_sign_in_short">Registrar</string>
+    <string name="email">Email</string>
+    <string name="minimum_password">Senha muito curta, insira no mínimo 6 caracteres!</string>
+    <string name="auth_failed">Falha na autenticação, verifique seu e-mail e senha ou inscreva-se</string>
+    <string name="change_email">Mude o e-mail</string>
+    <string name="change_password">Mude a senha</string>
+    <string name="send_password_reset_email">Enviar email de redefinição de senha</string>
+    <string name="remove_user">Remover usuário</string>
+    <string name="new_pass">Nova senha</string>
+    <string name="title_activity_profile">UMADEB</string>
+    <string name="title_activity_login">Logar</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_password">Senha</string>
+    <string name="hint_name">Nome completo</string>
+    <string name="btn_login">LOGIN</string>
+    <string name="btn_link_to_register">Não é um membro? Registre-se agora!</string>
+    <string name="btn_link_to_login">Já registrado. Entre!</string>
+    <string name="title_activity_reset_password">ResetPasswordActivity</string>
+    <string name="btn_forgot_password">Esqueceu sua senha?</string>
+    <string name="btn_reset_password">Trocar a senha</string>
+    <string name="btn_back"><![CDATA[<< Voltar]]></string>
+    <string name="hint_new_email">Novo email</string>
+    <string name="btn_change">Mudar</string>
+    <string name="btn_send">Enviar</string>
+    <string name="btn_remove">Remover</string>
+    <string name="btn_sign_out">Conectar</string>
+    <string name="lbl_forgot_password">Esqueceu a senha?</string>
+    <string name="forgot_password_msg">Precisamos apenas de sua identificação de e-mail registrada para enviá-lo instruções de redefinição de senha.</string>
+
+    <string name="next">PRÓXIMO</string>
+    <string name="skip">PULAR</string>
+    <string name="start">CONSEGUI</string>
+
+    <string name="slide_1_title">Olá Umadebiano!</string>
+    <string name="slide_1_desc">A maneira mais fácil de pedir comida do seu restaurante favorito!</string>
+
+    <string name="slide_2_title">Ingressos de cinema</string>
+    <string name="slide_2_desc">Reserve bilhetes de cinema para sua família e amigos!</string>
+
+    <string name="slide_3_title">Grandes Descontos</string>
+    <string name="slide_3_desc">Melhores descontos em todos os serviços que oferecemos!</string>
+
+    <string name="slide_4_title">Viagem pelo mundo</string>
+    <string name="slide_4_desc">Reserve bilhetes de qualquer transporte e viajar pelo mundo!</string>
+
+    <string name="play_again_desc">Para ver o controle deslizante de boas-vindas novamente, vá para Configurações -> aplicativos -> controle deslizante de boas-vindas -> limpar dados</string>
+    <string name="play_again">Jogar de novo</string>
+    <string name="btn_configuracao">Configuração</string>
+    <string name="search">Pesquisar</string>
+    <string name="novo">Novo</string>
+    <string name="title_activity_main">MainActivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_integrantes">Integrantes</string>
+    <string name="sobre_app">Sobre</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Olá este é uma novo Fragmento Thiago</string>
+    <string name="umadeb_ano">Umadeb 2018</string>
+    <string name="agenda_geral">Agenda Geral</string>
+    <string name="configuracoes">Configurações</string>
+
+
+    <!--Textos do CardView - Congresso 2018 -->
+    <string name="action_add_favourite">Add to Favourites</string>
+    <string name="action_play_next">Play Next</string>
+    <string name="backdrop_title">Umadeb Play Music</string>
+    <string name="backdrop_subtitle">Repertório do congresso!</string>
+    <string name="title_activity_album">AlbumActivity</string>
+    <string name="album">Album</string>
+    <string name="quem_somos">Quem somos?</string>
+</resources>
