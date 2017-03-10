@@ -18,6 +18,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import br.com.netcriativa.umadeb.R;
 import br.com.netcriativa.umadeb.model.User;
@@ -31,7 +33,9 @@ public class SignUpActivity extends AppCompatActivity {
     private static final String TAG = "AndroidBash";
 
     //Add YOUR Firebase Reference URL instead of the following URL
-    private Firebase mRef = new Firebase("https://aplicativoumadeb.firebaseio.com/");
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference mRef = database.getReference();
+
     private User user;
     private EditText name;
     private EditText phoneNumber;

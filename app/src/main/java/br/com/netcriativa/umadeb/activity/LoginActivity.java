@@ -11,7 +11,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -27,6 +26,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import br.com.netcriativa.umadeb.R;
 import br.com.netcriativa.umadeb.model.User;
@@ -44,11 +45,11 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private ProgressDialog mProgressDialog;
-    //Add YOUR Firebase Reference URL instead of the following URL
-  // Firebase meuFirebase = new Firebase.setAndroidContext(this);
 
-    //Firebase mRef = new Firebase("https://aplicativoumadeb.firebaseio.com/users");
-    Firebase mRef = new Firebase("https://aplicativoumadeb.firebaseio.com/users");
+    //Add YOUR Firebase Reference URL instead of the following URL
+    // Write a message to the database
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference mRef = database.getReference("users");
 
     //FaceBook callbackManager
     private CallbackManager callbackManager;
@@ -58,23 +59,21 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
-        Firebase.setAndroidContext(this);
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         mAuth = FirebaseAuth.getInstance();
 
         FirebaseUser mUser = mAuth.getCurrentUser();
+
         if (mUser != null) {
-            // User is signed in
+            // O usuário está conectado
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             String uid = mAuth.getCurrentUser().getUid();
             String image = mAuth.getCurrentUser().getPhotoUrl().toString();
             intent.putExtra("user_id", uid);
-            if (image != null || image != "") {
-                intent.putExtra("profile_picture", image);
+            if(image!=null || image!=""){
+                intent.putExtra("profile_picture",image);
             }
             startActivity(intent);
             finish();
@@ -86,10 +85,10 @@ public class LoginActivity extends AppCompatActivity {
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser mUser = firebaseAuth.getCurrentUser();
                 if (mUser != null) {
-                    // User is signed in
+                    // O usuário está conectado
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + mUser.getUid());
                 } else {
-                    // User is signed out
+                    // O usuário está desativado
                     Log.d(TAG, "onAuthStateChanged:signed_out");
                 }
 
@@ -241,20 +240,20 @@ public class LoginActivity extends AppCompatActivity {
                             Log.w(TAG, "signInWithCredential", task.getException());
                             Toast.makeText(LoginActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
-                        } else {
-                            String uid = task.getResult().getUser().getUid();
-                            String name = task.getResult().getUser().getDisplayName();
-                            String email = task.getResult().getUser().getEmail();
-                            String image = task.getResult().getUser().getPhotoUrl().toString();
+                        }else{
+                            String uid=task.getResult().getUser().getUid();
+                            String name=task.getResult().getUser().getDisplayName();
+                            String email=task.getResult().getUser().getEmail();
+                            String image=task.getResult().getUser().getPhotoUrl().toString();
 
                             //Create a new User and Save it in Firebase database
-                            User user = new User(uid, name, null, email, null);
+                            User user = new User(uid,name,null,email,null);
 
                             mRef.child(uid).setValue(user);
 
                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                            intent.putExtra("user_id", uid);
-                            intent.putExtra("profile_picture", image);
+                            intent.putExtra("user_id",uid);
+                            intent.putExtra("profile_picture",image);
                             startActivity(intent);
                             finish();
                         }

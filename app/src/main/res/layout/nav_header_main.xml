@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/dsad"
     android:layout_width="match_parent"
     android:layout_height="350dp"
     android:background="@color/bg_register"
@@ -16,19 +17,19 @@
         android:id="@+id/image_view_perfil"
         android:layout_width="60dp"
         android:layout_height="60dp"
+        android:layout_marginTop="16dp"
         android:src="@drawable/cover"
-        app:civ_border_width="1dp"
         app:civ_border_color="@color/btn_login_bg"
-        android:layout_marginTop="16dp" />
+        app:civ_border_width="1dp" />
 
     <TextView
+        android:id="@+id/txt_nome_usuario"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:editable="true"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
         android:text="Android Studio"
-        android:editable="true"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:id="@+id/txt_nome_usuario" />
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
     <TextView
         android:id="@+id/txt_email_usuario"
@@ -37,21 +38,21 @@
         android:text="android.studio@android.com" />
 
     <TextView
-        android:text="TextView"
+        android:id="@+id/text_view_welcome"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/text_view_welcome" />
+        android:text="TextView" />
 
     <Button
-        android:text="changeButton"
+        android:id="@+id/button_change"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/button_change" />
+        android:text="changeButton" />
 
     <Button
-        android:text="revertButton"
+        android:id="@+id/button_revert"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/button_revert" />
+        android:text="revertButton" />
 
 </LinearLayout>

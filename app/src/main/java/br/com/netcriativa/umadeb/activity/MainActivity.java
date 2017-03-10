@@ -1,5 +1,6 @@
 package br.com.netcriativa.umadeb.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -14,11 +15,13 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +30,9 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -40,7 +46,6 @@ import br.com.netcriativa.umadeb.fragment.MainFragment;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private static final String TAG = "AndroidBash";
-    private Firebase myFirebaseRef;
     private FirebaseAuth mAuth;
     private TextView name;
     private TextView welcomeText;
@@ -49,6 +54,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     // To hold Facebook profile picture
     private ImageView profilePicture;
 
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference myFirebaseRef = database.getReference("users");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,9 +68,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setSupportActionBar(toolbar);
         setTitle(R.string.app_name);
 
-        // Cria uma referência para seu banco de dados Firebase
-        // Adicione seu URL de referência do Firebase em vez do seguinte URL
-        myFirebaseRef = new Firebase("https://aplicativoumadeb.firebaseio.com/users");
+
+
         mAuth = FirebaseAuth.getInstance();
 
 
@@ -97,64 +103,67 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+
+        View headerView = navigationView.inflateHeaderView(R.layout.nav_header_main);
+
+        profilePicture = (ImageView) headerView.findViewById(R.id.image_view_perfil);
+        name = (TextView) headerView.findViewById(R.id.txt_nome_usuario);
+        welcomeText = (TextView) headerView.findViewById(R.id.text_view_welcome);
+        changeButton = (Button) headerView.findViewById(R.id.button_change);
+        revertButton = (Button) headerView.findViewById(R.id.button_revert);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        name = (TextView) findViewById(R.id.txt_nome_usuario);
-        welcomeText = (TextView) findViewById(R.id.text_view_welcome);
-        changeButton = (Button) findViewById(R.id.button_change);
-        revertButton = (Button) findViewById(R.id.button_revert);
-        profilePicture = (ImageView) findViewById(R.id.image_view_perfil);
-
-        //Get the uid for the currently logged in User from intent data passed to this activity
+        //Obter o uid para o usuário atualmente logado de dados de intenção passados para esta atividade
         String uid = getIntent().getExtras().getString("user_id");
 
-        //Get the imageUrl  for the currently logged in User from intent data passed to this activity
+        //Obter o imageUrl para o usuário atualmente logado de dados de intenção passados para esta atividade
         String imageUrl = getIntent().getExtras().getString("profile_picture");
 
         new ImageLoadTask(imageUrl, profilePicture).execute();
 
         // Referindo-se ao nome do Usuário que fez logon no momento e adicionando um valorChangeListener
-        myFirebaseRef.child(uid).child("name").addValueEventListener(new ValueEventListener() {
-
-            //onDataChange is called every time the name of the User changes in your Firebase Database
+        myFirebaseRef.child(uid).child("name").addValueEventListener(new com.google.firebase.database.ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                //Inside onDataChange we can get the data as an Object from the dataSnapshot
-                //getValue returns an Object. We can specify the type by passing the type expected as a parameter
+            public void onDataChange(com.google.firebase.database.DataSnapshot dataSnapshot) {
+                // Dentro onDataChange podemos obter os dados como um Object a partir do dataSnapshot
+                // getValue retorna um objeto. Podemos especificar o tipo passando o tipo esperado como um parâmetro
                 String data = dataSnapshot.getValue(String.class);
                 name.setText("Hello " + data + ", ");
             }
 
-            //onCancelled is called in case of any error
             @Override
-            public void onCancelled(FirebaseError firebaseError) {
-                Toast.makeText(getApplicationContext(), "" + firebaseError.getMessage(), Toast.LENGTH_LONG).show();
+            public void onCancelled(DatabaseError databaseError) {
+                Toast.makeText(getApplicationContext(), "" + databaseError.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
 
-        //A firebase reference to the welcomeText can be created in following ways :
-        // You can use this :
-        //Firebase myAnotherFirebaseRefForWelcomeText=new Firebase("https://androidbashfirebaseupdat-bd094.firebaseio.com/welcomeText");*/
-        //OR as shown below
-        myFirebaseRef.child("welcomeText").addValueEventListener(new ValueEventListener() {
-            //onDataChange is called every time the data changes in your Firebase Database
+
+
+        // Uma referência do firebase ao welcomeText pode ser criada das seguintes maneiras:
+        // Você pode usar isto:
+        // Firebase myAnotherFirebaseRefForWelcomeText = new Firebase ("https://androidbashfirebaseupdat-bd094.firebaseio.com/welcomeText"); * /
+        // OR como mostrado abaixo
+        myFirebaseRef.child(uid).child("welcomeText").addValueEventListener(new com.google.firebase.database.ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onDataChange(com.google.firebase.database.DataSnapshot dataSnapshot) {
                 //Inside onDataChange we can get the data as an Object from the dataSnapshot
                 //getValue returns an Object. We can specify the type by passing the type expected as a parameter
                 String data = dataSnapshot.getValue(String.class);
                 welcomeText.setText(data);
             }
 
-            //onCancelled is called in case of any error
             @Override
-            public void onCancelled(FirebaseError firebaseError) {
-                Toast.makeText(getApplicationContext(), "" + firebaseError.getMessage(), Toast.LENGTH_LONG).show();
+            public void onCancelled(DatabaseError databaseError) {
+                Toast.makeText(getApplicationContext(), "" + databaseError.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
+
+
+
 
         //onClicking changeButton the value of the welcomeText in the Firebase database gets changed
         changeButton.setOnClickListener(new View.OnClickListener() {
@@ -284,8 +293,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         protected Bitmap doInBackground(Void... params) {
             try {
                 URL urlConnection = new URL(url);
-                HttpURLConnection connection = (HttpURLConnection) urlConnection
-                        .openConnection();
+                HttpURLConnection connection = (HttpURLConnection) urlConnection.openConnection();
                 connection.setDoInput(true);
                 connection.connect();
                 InputStream input = connection.getInputStream();
