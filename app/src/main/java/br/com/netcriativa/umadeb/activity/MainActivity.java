@@ -8,8 +8,13 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
@@ -20,15 +25,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.HeaderViewListAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.firebase.client.DataSnapshot;
-import com.firebase.client.Firebase;
-import com.firebase.client.FirebaseError;
-import com.firebase.client.ValueEventListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -37,9 +39,13 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 import br.com.netcriativa.umadeb.R;
-import br.com.netcriativa.umadeb.fragment.AgendaGeralFragment;
+import br.com.netcriativa.umadeb.fragment.Fragment1;
+import br.com.netcriativa.umadeb.fragment.Fragment2;
+import br.com.netcriativa.umadeb.fragment.Fragment3;
 import br.com.netcriativa.umadeb.fragment.IntegrantesFragment;
 import br.com.netcriativa.umadeb.fragment.MainFragment;
 
@@ -47,12 +53,14 @@ import br.com.netcriativa.umadeb.fragment.MainFragment;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private static final String TAG = "AndroidBash";
     private FirebaseAuth mAuth;
-    private TextView name;
-    private TextView welcomeText;
-    private Button changeButton;
-    private Button revertButton;
-    // To hold Facebook profile picture
+    private TextView name, email;
     private ImageView profilePicture;
+
+    ////////////////// TABS ///////////////////////////////////////////
+    private TabLayout tabLayout;
+    private ViewPager viewPager;
+    ////////////////// TABS ///////////////////////////////////////////
+
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myFirebaseRef = database.getReference("users");
@@ -67,6 +75,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         setTitle(R.string.app_name);
+
+        ////////////////// TABS ///////////////////////////////////////////
+        viewPager = (ViewPager) findViewById(R.id.viewpager);
+        setupViewPager(viewPager);
+
+        tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout.setupWithViewPager(viewPager);
+        ////////////////// TABS ///////////////////////////////////////////
 
 
 
@@ -96,8 +112,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         //Navigation Drawer Ativo nos fragments
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
@@ -105,14 +120,52 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
 
 
-        View headerView = navigationView.inflateHeaderView(R.layout.nav_header_main);
-
-        profilePicture = (ImageView) headerView.findViewById(R.id.image_view_perfil);
-        name = (TextView) headerView.findViewById(R.id.txt_nome_usuario);
-        welcomeText = (TextView) headerView.findViewById(R.id.text_view_welcome);
-        changeButton = (Button) headerView.findViewById(R.id.button_change);
-        revertButton = (Button) headerView.findViewById(R.id.button_revert);
+        profilePicture = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.image_view_perfil);
+        name = (TextView) navigationView.getHeaderView(0).findViewById(R.id.txt_nome_usuario);
+        email = (TextView)navigationView.getHeaderView(0).findViewById(R.id.txt_email_usuario);
     }
+
+    ////////////////// TABS ///////////////////////////////////////////
+    private void setupViewPager(ViewPager viewPager) {
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        adapter.addFragment(new Fragment1(), "O CONGRESSO");
+        adapter.addFragment(new Fragment2(), "HOSPEDAGEM");
+        adapter.addFragment(new Fragment3(), "LOJA UMADEB");
+        viewPager.setAdapter(adapter);
+    }
+    ////////////////// TABS ///////////////////////////////////////////
+
+
+    ////////////////// TABS ///////////////////////////////////////////
+    class ViewPagerAdapter extends FragmentPagerAdapter {
+        private final List<Fragment> mFragmentList = new ArrayList<>();
+        private final List<String> mFragmentTitleList = new ArrayList<>();
+
+        public ViewPagerAdapter(FragmentManager manager) {
+            super(manager);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return mFragmentList.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return mFragmentList.size();
+        }
+
+        public void addFragment(Fragment fragment, String title) {
+            mFragmentList.add(fragment);
+            mFragmentTitleList.add(title);
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return mFragmentTitleList.get(position);
+        }
+    }
+    ////////////////// TABS ///////////////////////////////////////////
 
     @Override
     protected void onStart() {
@@ -129,10 +182,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         myFirebaseRef.child(uid).child("name").addValueEventListener(new com.google.firebase.database.ValueEventListener() {
             @Override
             public void onDataChange(com.google.firebase.database.DataSnapshot dataSnapshot) {
-                // Dentro onDataChange podemos obter os dados como um Object a partir do dataSnapshot
-                // getValue retorna um objeto. Podemos especificar o tipo passando o tipo esperado como um parâmetro
                 String data = dataSnapshot.getValue(String.class);
-                name.setText("Hello " + data + ", ");
+                name.setText(data);
             }
 
             @Override
@@ -142,42 +193,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
 
 
-
-        // Uma referência do firebase ao welcomeText pode ser criada das seguintes maneiras:
-        // Você pode usar isto:
-        // Firebase myAnotherFirebaseRefForWelcomeText = new Firebase ("https://androidbashfirebaseupdat-bd094.firebaseio.com/welcomeText"); * /
-        // OR como mostrado abaixo
-        myFirebaseRef.child(uid).child("welcomeText").addValueEventListener(new com.google.firebase.database.ValueEventListener() {
+        myFirebaseRef.child(uid).child("email").addValueEventListener(new com.google.firebase.database.ValueEventListener() {
             @Override
             public void onDataChange(com.google.firebase.database.DataSnapshot dataSnapshot) {
-                //Inside onDataChange we can get the data as an Object from the dataSnapshot
-                //getValue returns an Object. We can specify the type by passing the type expected as a parameter
                 String data = dataSnapshot.getValue(String.class);
-                welcomeText.setText(data);
+                email.setText(data);
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 Toast.makeText(getApplicationContext(), "" + databaseError.getMessage(), Toast.LENGTH_LONG).show();
-            }
-        });
-
-
-
-
-        //onClicking changeButton the value of the welcomeText in the Firebase database gets changed
-        changeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                myFirebaseRef.child("welcomeText").setValue("Android App Development @ AndroidBash");
-            }
-        });
-
-        //onClicking revertButton the value of the welcomeText in the Firebase database gets changed
-        revertButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                myFirebaseRef.child("welcomeText").setValue("Welcome to Learning @ AndroidBash");
             }
         });
     }
@@ -256,9 +281,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         } else if (id == R.id.agenda_geral) {
 
-            //setTitle("Agenda Geral");
-           // Fragment f = AgendaGeralFragment.newInstance("AgendaGeralFragment");
-           // getSupportFragmentManager().beginTransaction().replace(R.id.frame, f).commit();
+           // setTitle("Agenda Geral");
+            //Fragment f = AgendaGeralFragment.newInstance("AgendaGeralFragment");
+            //getSupportFragmentManager().beginTransaction().replace(R.id.frame, f).commit();
 
             // Intent intent = new Intent(this, AgendaGeralActivity.class);
             //startActivity(intent);

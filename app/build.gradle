@@ -55,7 +55,6 @@ dependencies {
     compile 'com.firebase:firebase-client-android:2.5.2+'
 
     //Facebook SDK
-    compile 'com.facebook.android:facebook-android-sdk:4.9.0'
     compile 'com.facebook.android:facebook-android-sdk:[4,5)'
 
     //Picasso

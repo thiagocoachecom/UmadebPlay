@@ -4,13 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/imagem_bg_app"
     android:fitsSystemWindows="true"
     tools:context=".activity.LoginActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="50dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_margin="40dp"
         android:gravity="center_horizontal">
 
         <ProgressBar
@@ -27,45 +30,30 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/text_view_email_id"
-                android:layout_width="wrap_content"
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="15dp"
-                android:fontFamily="sans-serif-medium"
-                android:text="Enter Your Email"
-                android:textColor="#000000"
-                android:textSize="18sp"
-                android:textStyle="bold|italic" />
+                android:paddingBottom="30dp"
+                app:srcCompat="@drawable/logo_umadeb_play" />
 
             <EditText
                 android:id="@+id/edit_text_email_id"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:inputType="textEmailAddress" />
+                android:hint="E-mail"
+                android:inputType="textEmailAddress"
+                android:textColorHint="@color/btn_login_bg" />
 
-
-            <TextView
-                android:id="@+id/text_view_password"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="15dp"
-                android:fontFamily="sans-serif-medium"
-                android:text="Enter Your Password"
-                android:textColor="#000000"
-                android:textSize="18sp"
-                android:textStyle="bold|italic" />
 
             <EditText
                 android:id="@+id/edit_text_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignLeft="@+id/text_view_password"
-                android:layout_marginLeft="15dp"
-                android:inputType="textPassword" />
+                android:hint="Senha"
+                android:inputType="textPassword"
+                android:textColorHint="@color/btn_login_bg" />
 
 
             <Space
@@ -78,40 +66,21 @@
                 style="?android:textAppearanceSmall"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:background="#3333cc"
+                android:background="@color/accent"
                 android:onClick="onLoginClicked"
-                android:padding="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:text="Log In"
-                android:textStyle="bold"
-                android:textColor="@color/primary_text"/>
+                android:text="entrar"
+                android:textColor="?android:attr/textColorPrimaryInverse"
+                android:textStyle="bold" />
 
             <Space
                 android:layout_width="1dp"
                 android:layout_height="35dp" />
 
-            <!--<Button-->
-            <!--android:id="@+id/button_facebook_sign_in"-->
-            <!--style="?android:textAppearanceSmall"-->
-            <!--android:layout_width="fill_parent"-->
-            <!--android:layout_height="fill_parent"-->
-            <!--android:background="@color/colorPrimaryDark"-->
-            <!--android:onClick="onFacebookLogInClicked"-->
-            <!--android:padding="10dp"-->
-            <!--android:layout_marginLeft="10dp"-->
-            <!--android:layout_marginRight="10dp"-->
-            <!--android:text="Login with Facebook"-->
-            <!--android:textStyle="bold"-->
-            <!--android:textColor="@color/colorText"/>-->
-
             <com.facebook.login.widget.LoginButton
                 android:id="@+id/button_facebook_login"
                 android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+                android:layout_height="71dp"
                 android:layout_centerInParent="true"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
                 android:textStyle="bold" />
 
             <Space
@@ -119,19 +88,19 @@
                 android:layout_height="10dp" />
 
 
-            <Button
+            <TextView
                 android:id="@+id/button_sign_up"
                 style="?android:textAppearanceSmall"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:background="#0066ff"
-                android:onClick="onSignUpClicked"
-                android:padding="10dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:text="New User? Please Sign Up"
-                android:textStyle="bold"
-                android:textColor="@color/primary_text"/>
+                android:onClick="onSignUpClicked"
+                android:padding="10dp"
+                android:text="Novo usuário? Inscreva-se"
+                android:textAlignment="center"
+                android:textColor="@color/btn_login_bg"
+                android:textStyle="bold" />
 
         </LinearLayout>
     </RelativeLayout>

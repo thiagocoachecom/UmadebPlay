@@ -21,11 +21,11 @@ import br.com.netcriativa.umadeb.model.FeedItem;
  * Created by Administrator on 07/03/2017.
  */
 
-public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.CustomViewHolder> {
+public class MainAdapter extends RecyclerView.Adapter<MainAdapter.CustomViewHolder> {
     private List<FeedItem> feedItemList;
     private Context mContext;
 
-    public MyRecyclerViewAdapter(Context context, List<FeedItem> feedItemList) {
+    public MainAdapter(Context context, List<FeedItem> feedItemList) {
         this.feedItemList = feedItemList;
         this.mContext = context;
     }
@@ -42,11 +42,13 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         FeedItem feedItem = feedItemList.get(i);
 
         //Renderizar imagem usando a biblioteca Picasso
+
         if (!TextUtils.isEmpty(feedItem.getThumbnail())) {
             Picasso.with(mContext).load(feedItem.getThumbnail()).error(R.drawable.logo_umadeb).placeholder(R.drawable.logo_umadeb).into(customViewHolder.imageView);
         }
 
         //Definir título da vista de texto
+
         customViewHolder.textView.setText(Html.fromHtml(feedItem.getTitle()));
     }
 

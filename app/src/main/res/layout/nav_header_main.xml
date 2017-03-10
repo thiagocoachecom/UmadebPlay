@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/dsad"
     android:layout_width="match_parent"
-    android:layout_height="350dp"
+    android:layout_height="180dp"
     android:background="@color/bg_register"
     android:gravity="bottom"
     android:orientation="vertical"
@@ -36,23 +36,5 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="android.studio@android.com" />
-
-    <TextView
-        android:id="@+id/text_view_welcome"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="TextView" />
-
-    <Button
-        android:id="@+id/button_change"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="changeButton" />
-
-    <Button
-        android:id="@+id/button_revert"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="revertButton" />
 
 </LinearLayout>

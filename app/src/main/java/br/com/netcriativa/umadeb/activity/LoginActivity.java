@@ -2,6 +2,8 @@ package br.com.netcriativa.umadeb.activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +11,8 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.Toast;
 import com.facebook.AccessToken;
@@ -18,7 +22,6 @@ import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
-import com.firebase.client.Firebase;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
@@ -39,7 +42,7 @@ import br.com.netcriativa.umadeb.model.User;
 public class LoginActivity extends AppCompatActivity {
 
     private static final String TAG = "AndroidBash";
-    public User user;
+    public  User user;
     private EditText email;
     private EditText password;
     private FirebaseAuth mAuth;
@@ -58,7 +61,17 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //Tornar a barra de notificação transparente
+        if (Build.VERSION.SDK_INT >= 21) {
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+        }
+
         setContentView(R.layout.activity_login);
+
+        // Tornando a barra de notificação transparente
+        changeStatusBarColor();
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -70,10 +83,13 @@ public class LoginActivity extends AppCompatActivity {
             // O usuário está conectado
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             String uid = mAuth.getCurrentUser().getUid();
+            Log.d(TAG, "Id do usuário: " + uid);
+
+
             String image = mAuth.getCurrentUser().getPhotoUrl().toString();
             intent.putExtra("user_id", uid);
             if(image!=null || image!=""){
-                intent.putExtra("profile_picture",image);
+                intent.putExtra("profile_picture", image);
             }
             startActivity(intent);
             finish();
@@ -144,6 +160,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         callbackManager.onActivityResult(requestCode, resultCode, data);
     }
+
     //
 
     protected void setUpUser() {
@@ -241,19 +258,19 @@ public class LoginActivity extends AppCompatActivity {
                             Toast.makeText(LoginActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                         }else{
-                            String uid=task.getResult().getUser().getUid();
-                            String name=task.getResult().getUser().getDisplayName();
-                            String email=task.getResult().getUser().getEmail();
-                            String image=task.getResult().getUser().getPhotoUrl().toString();
+                            String uid = task.getResult().getUser().getUid();
+                            String name = task.getResult().getUser().getDisplayName();
+                            String email = task.getResult().getUser().getEmail();
+                            String image = task.getResult().getUser().getPhotoUrl().toString();
 
-                            //Create a new User and Save it in Firebase database
+                            //Criar um novo usuário e salvá-lo no banco de dados Firebase
                             User user = new User(uid,name,null,email,null);
 
                             mRef.child(uid).setValue(user);
 
                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                            intent.putExtra("user_id",uid);
-                            intent.putExtra("profile_picture",image);
+                            intent.putExtra("user_id", uid);
+                            intent.putExtra("profile_picture", image);
                             startActivity(intent);
                             finish();
                         }
@@ -277,6 +294,17 @@ public class LoginActivity extends AppCompatActivity {
     public void hideProgressDialog() {
         if (mProgressDialog != null && mProgressDialog.isShowing()) {
             mProgressDialog.dismiss();
+        }
+    }
+
+    /**
+     * Making notification bar transparent
+     */
+    private void changeStatusBarColor() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(Color.TRANSPARENT);
         }
     }
 
