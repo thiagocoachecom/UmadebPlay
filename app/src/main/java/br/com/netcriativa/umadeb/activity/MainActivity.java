@@ -56,11 +56,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private TextView name, email;
     private ImageView profilePicture;
 
-    ////////////////// TABS ///////////////////////////////////////////
-    private TabLayout tabLayout;
-    private ViewPager viewPager;
-    ////////////////// TABS ///////////////////////////////////////////
-
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myFirebaseRef = database.getReference("users");
@@ -75,16 +70,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         setTitle(R.string.app_name);
-
-        ////////////////// TABS ///////////////////////////////////////////
-        viewPager = (ViewPager) findViewById(R.id.viewpager);
-        setupViewPager(viewPager);
-
-        tabLayout = (TabLayout) findViewById(R.id.tabs);
-        tabLayout.setupWithViewPager(viewPager);
-        ////////////////// TABS ///////////////////////////////////////////
-
-
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -124,48 +109,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         name = (TextView) navigationView.getHeaderView(0).findViewById(R.id.txt_nome_usuario);
         email = (TextView)navigationView.getHeaderView(0).findViewById(R.id.txt_email_usuario);
     }
-
-    ////////////////// TABS ///////////////////////////////////////////
-    private void setupViewPager(ViewPager viewPager) {
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new Fragment1(), "O CONGRESSO");
-        adapter.addFragment(new Fragment2(), "HOSPEDAGEM");
-        adapter.addFragment(new Fragment3(), "LOJA UMADEB");
-        viewPager.setAdapter(adapter);
-    }
-    ////////////////// TABS ///////////////////////////////////////////
-
-
-    ////////////////// TABS ///////////////////////////////////////////
-    class ViewPagerAdapter extends FragmentPagerAdapter {
-        private final List<Fragment> mFragmentList = new ArrayList<>();
-        private final List<String> mFragmentTitleList = new ArrayList<>();
-
-        public ViewPagerAdapter(FragmentManager manager) {
-            super(manager);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return mFragmentList.get(position);
-        }
-
-        @Override
-        public int getCount() {
-            return mFragmentList.size();
-        }
-
-        public void addFragment(Fragment fragment, String title) {
-            mFragmentList.add(fragment);
-            mFragmentTitleList.add(title);
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return mFragmentTitleList.get(position);
-        }
-    }
-    ////////////////// TABS ///////////////////////////////////////////
 
     @Override
     protected void onStart() {
