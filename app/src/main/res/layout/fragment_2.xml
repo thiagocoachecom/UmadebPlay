@@ -4,12 +4,47 @@
     android:layout_height="match_parent"
     tools:context=".fragment.Fragment1">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Segundo"
-        android:textSize="40dp"
-        android:textStyle="bold"
-        android:layout_centerInParent="true"/>
+    <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/card_view"
+        android:layout_width="match_parent"
+        android:layout_height="380dp"
+        android:layout_margin="8dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/thumbnail"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_alignParentTop="true"
+                android:scaleType="centerCrop"
+                android:src="@drawable/cover" />
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/thumbnail"
+                android:maxLines="3"
+                android:padding="8dp"
+                android:text="Loja da Umadeb 2018"
+                android:textColor="#222"
+                android:textStyle="bold"
+                android:textSize="22dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/title"
+                android:maxLines="3"
+                android:padding="8dp"
+                android:text="Uma descrição completa das informações"
+                android:textColor="#666"
+                android:textSize="14dp" />
+
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
 
 </RelativeLayout>

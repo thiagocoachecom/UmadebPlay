@@ -5,7 +5,10 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -24,6 +27,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.HeaderViewListAdapter;
 import android.widget.ImageView;
@@ -60,6 +64,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myFirebaseRef = database.getReference("users");
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -107,7 +112,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         profilePicture = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.image_view_perfil);
         name = (TextView) navigationView.getHeaderView(0).findViewById(R.id.txt_nome_usuario);
-        email = (TextView)navigationView.getHeaderView(0).findViewById(R.id.txt_email_usuario);
+        email = (TextView) navigationView.getHeaderView(0).findViewById(R.id.txt_email_usuario);
     }
 
     @Override
@@ -157,7 +162,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
-
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -195,13 +199,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             alertDialog.show();
 
             return true;
-        } else if (id == R.id.action_logout){
+        } else if (id == R.id.action_logout) {
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
-
 
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -224,7 +227,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         } else if (id == R.id.agenda_geral) {
 
-           // setTitle("Agenda Geral");
+            // setTitle("Agenda Geral");
             //Fragment f = AgendaGeralFragment.newInstance("AgendaGeralFragment");
             //getSupportFragmentManager().beginTransaction().replace(R.id.frame, f).commit();
 

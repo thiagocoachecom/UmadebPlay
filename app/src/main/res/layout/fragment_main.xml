@@ -2,28 +2,24 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layoutDirection="rtl">
+    android:layout_height="match_parent">
 
-    <com.ogaclejapan.smarttablayout.SmartTabLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <android.support.design.widget.TabLayout
         android:id="@+id/astab_home_app"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:background="@color/primary"
-        app:stl_defaultTabTextColor="@color/white"
-        app:stl_defaultTabTextHorizontalPadding="24dp"
-        app:stl_indicatorColor="@color/accent"
-        app:stl_indicatorInterpolation="linear"
-        app:stl_indicatorThickness="3dp"
-        app:stl_underlineThickness="1dp" />
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:elevation="4dp"
+        app:tabGravity="fill"
+        app:tabMode="fixed"
+        app:tabSelectedTextColor="@color/btn_login_bg"
+        app:tabTextColor="@color/btn_login_bg"/>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/view_pager_tab"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layout_below="@id/astab_home_app"/>
 
 </RelativeLayout>
