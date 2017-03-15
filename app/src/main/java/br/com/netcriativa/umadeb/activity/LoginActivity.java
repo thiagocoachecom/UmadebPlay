@@ -133,8 +133,6 @@ public class LoginActivity extends AppCompatActivity {
                 Log.d(TAG, "facebook:onError", error);
             }
         });
-        //
-
     }
 
     @Override

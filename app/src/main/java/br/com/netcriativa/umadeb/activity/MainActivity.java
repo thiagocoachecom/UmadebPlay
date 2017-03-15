@@ -55,7 +55,6 @@ import br.com.netcriativa.umadeb.fragment.MainFragment;
 
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    private static final String TAG = "AndroidBash";
     private FirebaseAuth mAuth;
     private TextView name, email;
     private ImageView profilePicture;
@@ -64,8 +63,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myFirebaseRef = database.getReference("users");
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -85,6 +82,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             getSupportFragmentManager().beginTransaction().replace(R.id.frame, f).commit();
         }
 
+        //Navigation Drawer Ativo nos fragments
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
+
+        profilePicture = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.image_view_perfil);
+        name = (TextView) navigationView.getHeaderView(0).findViewById(R.id.txt_nome_usuario);
+        email = (TextView) navigationView.getHeaderView(0).findViewById(R.id.txt_email_usuario);
+
 
         //Botão de Compartilhamento com Social Media
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -99,20 +110,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(Intent.createChooser(sharingIntent, "Compartilhar APP"));
             }
         });
-
-        //Navigation Drawer Ativo nos fragments
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-
-
-        profilePicture = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.image_view_perfil);
-        name = (TextView) navigationView.getHeaderView(0).findViewById(R.id.txt_nome_usuario);
-        email = (TextView) navigationView.getHeaderView(0).findViewById(R.id.txt_email_usuario);
     }
 
     @Override

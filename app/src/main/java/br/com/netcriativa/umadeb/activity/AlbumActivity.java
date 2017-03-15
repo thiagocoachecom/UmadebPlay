@@ -37,17 +37,7 @@ public class AlbumActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        //Tornar a barra de notificação transparente
-        if (Build.VERSION.SDK_INT >= 21) {
-            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
-        }
-
         setContentView(R.layout.activity_album);
-
-        // Tornando a barra de notificação transparente
-        changeStatusBarColor();
-
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -73,14 +63,6 @@ public class AlbumActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        //Tornar a barra de notificação transparente
-        if (Build.VERSION.SDK_INT >= 21) {
-            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
-        }
-
-        // Tornando a barra de notificação transparente
-        changeStatusBarColor();
-
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,17 +75,22 @@ public class AlbumActivity extends AppCompatActivity {
     }
 
     /**
-     * Initializing collapsing toolbar
-     * Will show and hide the toolbar title on scroll
+     *Inicializando a barra de ferramentas em colapso
+     *Mostrará e ocultará o título da barra de ferramentas na rolagem
      */
     private void initCollapsingToolbar() {
-        final CollapsingToolbarLayout collapsingToolbar =
-                (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
+
+
+        final CollapsingToolbarLayout collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
+
         collapsingToolbar.setTitle(" ");
+
+        //Deixa Espandido o APP bar
         AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.appbar);
         appBarLayout.setExpanded(true);
 
-        // hiding & showing the title when toolbar expanded & collapsed
+
+        // Ocultando e exibindo o título quando a barra de ferramentas foi expandida e recolhida
         appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             boolean isShow = false;
             int scrollRange = -1;
@@ -213,18 +200,6 @@ public class AlbumActivity extends AppCompatActivity {
             }
         }
     }
-
-    /**
-     * Making notification bar transparent
-     */
-    private void  changeStatusBarColor() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Window window = getWindow();
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(Color.TRANSPARENT);
-        }
-    }
-
 
 
     /**

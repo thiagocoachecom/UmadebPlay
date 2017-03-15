@@ -2,6 +2,7 @@ package br.com.netcriativa.umadeb.fragment;
 
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -54,7 +56,6 @@ public class MainFragment extends Fragment {
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private FragmentActivity myContext;
-    private AppBarLayout mAppBarLayout;
 
     public MainFragment() {
         // Required empty public constructor
@@ -62,18 +63,15 @@ public class MainFragment extends Fragment {
 
     public static Fragment newInstance(String demo) {
         MainFragment f = new MainFragment();
-
         Bundle args = new Bundle();
-
         args.putString(KEY_TITLE, demo);
         f.setArguments(args);
-
         return (f);
     }
 
     @Override
     public void onAttach(Activity activity) {
-        myContext=(FragmentActivity) activity;
+        myContext = (FragmentActivity) activity;
         super.onAttach(activity);
     }
 
@@ -82,7 +80,6 @@ public class MainFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_main, container, false);
 
-
         viewPager = (ViewPager) v.findViewById(R.id.view_pager_tab);
         setupViewPager(viewPager);
 
@@ -90,6 +87,14 @@ public class MainFragment extends Fragment {
         tabLayout.setupWithViewPager(viewPager);
 
         return v;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getActivity().findViewById(R.id.app_bar_layout).setElevation(0);
+        }
+        super.onAttach(context);
     }
 
     private void setupViewPager(ViewPager viewPager) {

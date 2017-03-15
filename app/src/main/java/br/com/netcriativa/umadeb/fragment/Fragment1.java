@@ -46,6 +46,14 @@ public class Fragment1 extends Fragment{
         // Required empty public constructor
     }
 
+    public static Fragment newInstance(String demo) {
+        Fragment1 f = new Fragment1();
+        Bundle args = new Bundle();
+        args.putString(KEY_TITLE, demo);
+        f.setArguments(args);
+        return (f);
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

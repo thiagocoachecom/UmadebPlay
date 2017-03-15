@@ -14,9 +14,18 @@ import br.com.netcriativa.umadeb.R;
 
 
 public class Fragment3 extends Fragment{
+    private static final String KEY_TITLE = "title";
 
     public Fragment3() {
         // Required empty public constructor
+    }
+
+    public static Fragment newInstance(String demo) {
+        Fragment3 f = new Fragment3();
+        Bundle args = new Bundle();
+        args.putString(KEY_TITLE, demo);
+        f.setArguments(args);
+        return (f);
     }
 
     @Override
